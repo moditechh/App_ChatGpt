@@ -104,7 +104,16 @@ export default function useRecorder() {
     setRecording(false);
     setResults('.............................');
   };
-  return { startRecognizing, stopRecognizing, loading, recording, volume, results, setResults };
+  return {
+    startRecognizing,
+    stopRecognizing,
+    loading,
+    recording,
+    volume,
+    results,
+    setResults,
+    error,
+  };
 }
 
 // const _destroyRecognizer = async () => {

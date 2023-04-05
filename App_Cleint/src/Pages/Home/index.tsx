@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 // import {} from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -8,10 +8,21 @@ import Loading from '../../Components/Loading';
 
 import useRecorder from '../../Hooks/UseRecorder/useRecorder';
 import { useNavigation } from '@react-navigation/native';
+import Message from '../../Components/Message';
 
 const Home = () => {
-  const { startRecognizing, stopRecognizing, loading, recording, results, setResults, volume } =
-    useRecorder();
+  const {
+    startRecognizing,
+    stopRecognizing,
+    error,
+    loading,
+    recording,
+    results,
+    setResults,
+    volume,
+  } = useRecorder();
+
+  // const [show, setShow] = useState(false);
 
   useEffect(() => {
     if (results === '') {
@@ -19,12 +30,15 @@ const Home = () => {
     }
   }, [results]);
 
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
 
   const date = new Date();
 
   return (
     <Conteiner>
+      {/* /** criar context api com um type e message para trazer 
+      dinamicamente e usar no componente toast */}
+      {error && <Message type="error" message="Essa é uma mensagem de error!" />}
       {loading ? (
         <Loading />
       ) : (
