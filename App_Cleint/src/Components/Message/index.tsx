@@ -1,14 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 import { Animated } from 'react-native';
-import { Button, Conteiner, Icon, MessageText } from './styles';
+import { Icon, MessageText } from './styles';
 
 type IMessageProps = {
-  message: string;
-  type: 'success' | 'error' | 'alert';
-  // show: string;
+  label: string;
 };
 
-export default function Message({ message, type }: IMessageProps) {
+export default function Message({ label }: IMessageProps) {
   const animet = useRef(new Animated.Value(0)).current;
 
   const fadeIn = () => {
@@ -34,29 +32,25 @@ export default function Message({ message, type }: IMessageProps) {
     fadeOut();
   }, []);
 
-  const color = type === 'success' ? '#0c9e1d' : type === 'error' ? '#ce1919' : '#6aa9f2';
-  const name =
-    type === 'success' ? 'check-circle-o' : type === 'error' ? 'times-circle-o' : 'info-circle';
-
   return (
     <Animated.View
       style={{
         opacity: animet,
         backgroundColor: '#FFF',
         width: '100%',
-        height: 50,
+        height: 70,
         flexDirection: 'row',
         position: 'absolute',
         top: 10,
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 10,
-        borderLeftWidth: 5,
-        borderLeftColor: color,
+        borderLeftWidth: 7,
+        borderLeftColor: '#ce1919',
       }}
     >
-      <Icon color={color} name={name} size={35} style={{ marginLeft: 10 }} />
-      <MessageText>{message}</MessageText>
+      <Icon color="#ce1919" name="times-circle-o" size={35} style={{ marginLeft: 10 }} />
+      <MessageText>{label}</MessageText>
     </Animated.View>
   );
 }

@@ -11,6 +11,7 @@ import Voice, {
 export default function useRecorder() {
   const [loading, setLoading] = useState(false);
   const [error, setErro] = useState('');
+  const [errorMessage, setErrorMessage] = useState({ message: '', status: false });
   const [recording, setRecording] = useState(false);
   const [results, setResults] = useState('.............................');
   const [partialResults, setPartialResults] = useState('.............................');
@@ -42,12 +43,15 @@ export default function useRecorder() {
     console.log('onSpeechEnd: ', e);
     setRecording(false);
     setVolume(0);
-    // setLoading(true);
+    setErrorMessage({ message: '', status: false });
+    setTimeout(() => {
+      setLoading(true);
+    }, 3000);
   };
 
   const onSpeechError = (e: SpeechErrorEvent) => {
     console.log('onSpeechError: ', e);
-    setErro(JSON.stringify(e.error?.message));
+    setErro(JSON.stringify(e.status?.message));
   };
 
   const onSpeechResults = (e: SpeechResultsEvent) => {
@@ -91,6 +95,7 @@ export default function useRecorder() {
       await Voice.start('pt-BR');
     } catch (e) {
       console.error(e);
+      setErrorMessage({ message: 'houve um erro na gravação, tente novamente!', status: true });
     }
     setRecording(true);
   };
@@ -108,11 +113,14 @@ export default function useRecorder() {
     startRecognizing,
     stopRecognizing,
     loading,
+    setLoading,
     recording,
     volume,
     results,
     setResults,
     error,
+    errorMessage,
+    setErrorMessage,
   };
 }
 

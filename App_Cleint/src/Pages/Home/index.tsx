@@ -20,9 +20,9 @@ const Home = () => {
     results,
     setResults,
     volume,
+    errorMessage,
+    setErrorMessage,
   } = useRecorder();
-
-  // const [show, setShow] = useState(false);
 
   useEffect(() => {
     if (results === '') {
@@ -30,15 +30,11 @@ const Home = () => {
     }
   }, [results]);
 
-  // const navigation = useNavigation();
-
   const date = new Date();
 
   return (
     <Conteiner>
-      {/* /** criar context api com um type e message para trazer 
-      dinamicamente e usar no componente toast */}
-      {error && <Message type="error" message="Essa é uma mensagem de error!" />}
+      {errorMessage.status && <Message label={errorMessage.message} />}
       {loading ? (
         <Loading />
       ) : (
