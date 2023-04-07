@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Pergunte ao CHATGPT</title>
+    <style>
+      /* Define o estilo do título */
+      h1 {
+        text-align: center;
+        font-size: 36px;
+        margin-top: 50px;
+      }
+
+      /* Define o estilo do input */
+      input[type="file"] {
+        display: block;
+        margin: auto;
+        margin-top: 50px;
+        font-size: 20px;
+        padding: 10px;
+      }
+
+      /* Define o estilo do botão */
+      input[type="submit"] {
+        display: block;
+        margin: auto;
+        margin-top: 20px;
+        font-size: 20px;
+        padding: 10px 20px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Define o título da página -->
+    <h1>Pergunte ao CHATGPT</h1>
+
+    <!-- Define o formulário para enviar um arquivo -->
+    <form
+      method="POST"
+      enctype="application/x-www-form-urlencoded"
+      action="{{ url_for('api.transcription.transcribe') }}"
+    > <label for="texto">
+      Digite um texto:
+    </label>
+      <input type="text" name="texto" id="texto"/>
+      <input type="submit" value="Enviar" />
+    </form>
+  </body>
+</html>
