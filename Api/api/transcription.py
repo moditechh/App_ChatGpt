@@ -61,6 +61,9 @@ def transcribe():
 
     # with open(audio_name,'rb') as file:
     #     transcription=openai.Audio.transcribe('whisper-1',file)
+
+    # Codigo antigo que retornava audio
+
     # text = request.form.get('texto')
     # answer = interpret(text)
 
@@ -68,9 +71,8 @@ def transcribe():
 
     # # voice_file = f'_answer.mp3'
     # # tts.save(f'api/static/answers/{voice_file}')
-
-    # return 
     
+
     data = request.get_json()
     text = data['text']
 
