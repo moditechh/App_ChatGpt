@@ -8,14 +8,16 @@ import Voice, {
   SpeechErrorEvent,
 } from '@react-native-voice/voice';
 
+import { UseRecorderContext } from '../../Context/RecorderContext';
+
 export default function useRecorder() {
-  const [loading, setLoading] = useState(false);
   const [error, setErro] = useState('');
-  const [errorMessage, setErrorMessage] = useState({ message: '', status: false });
   const [recording, setRecording] = useState(false);
   const [results, setResults] = useState('.............................');
   const [partialResults, setPartialResults] = useState('.............................');
   const [volume, setVolume] = useState(0);
+
+  const { errorMessage, loading, setErrorMessage, setLoading } = UseRecorderContext();
 
   useEffect(() => {
     Voice.onSpeechStart = onSpeechStart;
@@ -46,7 +48,7 @@ export default function useRecorder() {
     setErrorMessage({ message: '', status: false });
     setTimeout(() => {
       setLoading(true);
-    }, 3000);
+    }, 2000);
   };
 
   const onSpeechError = (e: SpeechErrorEvent) => {
@@ -95,13 +97,18 @@ export default function useRecorder() {
       await Voice.start('pt-BR');
     } catch (e) {
       console.error(e);
-      setErrorMessage({ message: 'houve um erro na gravação, tente novamente!', status: true });
+      setErrorMessage({
+        message: 'erro ao tentar gravar mensagem, tente novamente!',
+        status: true,
+      });
+      stopRecognizing();
     }
     setRecording(true);
   };
 
   const stopRecognizing = async () => {
     try {
+      setLoading(false);
       await Voice.stop();
     } catch (e) {
       console.error(e);
@@ -112,35 +119,10 @@ export default function useRecorder() {
   return {
     startRecognizing,
     stopRecognizing,
-    loading,
-    setLoading,
     recording,
     volume,
     results,
     setResults,
     error,
-    errorMessage,
-    setErrorMessage,
   };
 }
-
-// const _destroyRecognizer = async () => {
-//   try {
-//     await Voice.destroy();
-//   } catch (e) {
-//     console.error(e);
-//   }
-//   setResults('');
-//   setRecording(false);
-//   setResults('.............................');
-// };
-
-// const _cancelRecognizing = async () => {
-//   try {
-//     await Voice.cancel();
-//   } catch (e) {
-//     console.error(e);
-//   }
-//   setRecording(false);
-//   setResults('.............................');
-// };
