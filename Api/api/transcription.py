@@ -42,12 +42,12 @@ def transcribe():
 
 
     # Loop para excluir cada arquivo dentro da pasta
-    for nome_do_arquivo in os.listdir(caminho_da_pasta):
-        caminho_do_arquivo = os.path.join(caminho_da_pasta, nome_do_arquivo)
-        if os.path.isfile(caminho_do_arquivo):
-            os.remove(caminho_do_arquivo)
-        if request.method == 'GET':
-            return render_template('transcribe.html')
+    # for nome_do_arquivo in os.listdir(caminho_da_pasta):
+    #     caminho_do_arquivo = os.path.join(caminho_da_pasta, nome_do_arquivo)
+    #     if os.path.isfile(caminho_do_arquivo):
+    #         os.remove(caminho_do_arquivo)
+    #     if request.method == 'GET':
+    #         return render_template('transcribe.html')
 
     # audio = request.files.get('audio')
 
@@ -61,12 +61,19 @@ def transcribe():
 
     # with open(audio_name,'rb') as file:
     #     transcription=openai.Audio.transcribe('whisper-1',file)
-    text = request.form.get('texto')
+    # text = request.form.get('texto')
+    # answer = interpret(text)
+
+    # # tts = gTTS(text=answer, lang='pt-br')
+
+    # # voice_file = f'_answer.mp3'
+    # # tts.save(f'api/static/answers/{voice_file}')
+
+    # return 
+    
+    data = request.get_json()
+    text = data['text']
+
     answer = interpret(text)
 
-    tts = gTTS(text=answer, lang='pt-br')
-
-    voice_file = f'_answer.mp3'
-    tts.save(f'api/static/answers/{voice_file}')
-
-    return render_template('answer_page.html', voice_file=voice_file, pergunta=text)
+    return answer
