@@ -1,12 +1,15 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import MyStack from './Routes/routes';
+import RecorderContext from './Context/RecorderContext';
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <MyStack />
-    </NavigationContainer>
+    <RecorderContext>
+      <NavigationContainer>
+        <MyStack />
+      </NavigationContainer>
+    </RecorderContext>
   );
 };
 

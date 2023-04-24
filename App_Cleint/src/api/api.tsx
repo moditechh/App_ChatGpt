@@ -1,27 +1,47 @@
-import { View, Text } from 'react-native';
 import React from 'react';
 import axios from 'axios';
 
-import useRecorder from '../Hooks/UseRecorder/useRecorder';
-
 import { useNavigation } from '@react-navigation/native';
 
-export default function api() {
-  // CHAMADAS API VIA AXIOS IRAO AQUI...
-  // ESPERANDO A FINALIZAÇÃO DO SERVER
+// import useRecorder from '../Hooks/UseRecorder/useRecorder';
+import { UseRecorderContext } from '../Context/RecorderContext';
 
+export default function Api() {
   const navigation = useNavigation();
+  const { errorMessage, setLoading, loading, setErrorMessage } = UseRecorderContext();
 
-  const { loading, setLoading, setErrorMessage, errorMessage } = useRecorder();
+  const sendQuestion = async (message: string) => {
+    // if (message === '' || '.............................') return false;
 
-  const err = () => {
-    setLoading(false);
-    setErrorMessage({ message: 'Ops, parece que tem algo de errado com o ChatGPT', status: true });
+    console.log(message);
+    try {
+      const res = await axios.post(
+        'http://10.0.0.104:8000/api/transcribe',
+        { text: message },
+        {
+          headers: {
+            'Accept-Encoding': 'identity',
+          },
+        }
+      );
+
+      const data = await res.data;
+      console.log(data, 'RESPOSTA');
+      setLoading(false);
+      navigation.navigate('RecordPlayer', {
+        dados: data,
+        question: message,
+      });
+    } catch (error) {
+      setErrorMessage({
+        message: 'erro ao acessar a Api do chatGPT, tente novamente...',
+        status: true,
+      });
+      navigation.navigate('Home');
+      setLoading(false);
+      console.log(error);
+    }
   };
 
-  return (
-    <View>
-      <Text>api</Text>
-    </View>
-  );
+  return { sendQuestion };
 }

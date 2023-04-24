@@ -9,7 +9,7 @@ export default function Loading() {
     <Conteiner>
       <ActivityIndicator size={70} color="#0055ff" />
       <Text size={22} weight="500" color="#0055ff">
-        Carregando Dados
+        Carregando sua Resposta
       </Text>
     </Conteiner>
   );

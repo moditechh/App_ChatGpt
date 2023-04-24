@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-// import {} from 'react-native'
+import { KeyboardAvoidingView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import { Button, Conteiner, Info, Recorder, Input, Text, Header, ButtonIr } from '../../styles';
@@ -7,22 +7,17 @@ import SoundWave from '../../Components/SoundWave';
 import Loading from '../../Components/Loading';
 
 import useRecorder from '../../Hooks/UseRecorder/useRecorder';
-import { useNavigation } from '@react-navigation/native';
 import Message from '../../Components/Message';
+import Api from '../../api/api';
+
+import { UseRecorderContext } from '../../Context/RecorderContext';
 
 const Home = () => {
-  const {
-    startRecognizing,
-    stopRecognizing,
-    error,
-    loading,
-    recording,
-    results,
-    setResults,
-    volume,
-    errorMessage,
-    setErrorMessage,
-  } = useRecorder();
+  const { startRecognizing, stopRecognizing, error, recording, results, setResults, volume, end } =
+    useRecorder();
+
+  const { sendQuestion } = Api();
+  const { errorMessage, loading } = UseRecorderContext();
 
   useEffect(() => {
     if (results === '') {
@@ -31,6 +26,12 @@ const Home = () => {
   }, [results]);
 
   const date = new Date();
+
+  useEffect(() => {
+    if (loading) {
+      sendQuestion(results);
+    }
+  }, [loading]);
 
   return (
     <Conteiner>
@@ -57,22 +58,27 @@ const Home = () => {
               </Button>
             )}
           </Recorder>
-          <Info>
-            <Text color="#999" weight="400">
-              Toque para falar
-            </Text>
-            <Input
-              multiline
-              numberOfLines={4}
-              value={results}
-              onChangeText={(text) => setResults(text)}
-              maxLength={500}
-              editable={results !== '.............................'}
-            />
-          </Info>
-          {/* <ButtonIr onPress={() => navigation.navigate('RecordPlayer')}>
-            <Icon name="close" color="#ffffff" size={10} />
-          </ButtonIr> */}
+          <KeyboardAvoidingView
+            behavior="height"
+            style={{
+              flex: 1,
+              width: 400,
+            }}
+          >
+            <Info>
+              <Text color="#999" weight="400">
+                Toque para falar
+              </Text>
+              <Input
+                multiline
+                numberOfLines={4}
+                value={results}
+                onChangeText={(text) => setResults(text)}
+                maxLength={500}
+                editable={results !== '.............................'}
+              />
+            </Info>
+          </KeyboardAvoidingView>
         </>
       )}
     </Conteiner>
