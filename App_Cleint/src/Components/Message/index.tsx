@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Animated } from 'react-native';
+import { Animated, StyleSheet } from 'react-native';
 import { Icon, MessageText } from './styles';
 
 type IMessageProps = {
@@ -33,24 +33,25 @@ export default function Message({ label }: IMessageProps) {
   }, []);
 
   return (
-    <Animated.View
-      style={{
-        opacity: animet,
-        backgroundColor: '#FFF',
-        width: '100%',
-        height: 70,
-        flexDirection: 'row',
-        position: 'absolute',
-        top: 10,
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 10,
-        borderLeftWidth: 7,
-        borderLeftColor: '#ce1919',
-      }}
-    >
+    <Animated.View style={[styles.Conteiner, { opacity: animet }]}>
       <Icon color="#ce1919" name="times-circle-o" size={35} style={{ marginLeft: 10 }} />
       <MessageText>{label}</MessageText>
     </Animated.View>
   );
 }
+
+const styles = StyleSheet.create({
+  Conteiner: {
+    backgroundColor: '#FFF',
+    width: '100%',
+    height: 70,
+    flexDirection: 'row',
+    position: 'absolute',
+    top: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
+    borderLeftWidth: 7,
+    borderLeftColor: '#ce1919',
+  },
+});
