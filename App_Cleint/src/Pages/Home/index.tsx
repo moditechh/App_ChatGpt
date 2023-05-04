@@ -1,40 +1,45 @@
 import React, { useEffect, useState } from 'react';
-// import {} from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-import { Button, Conteiner, Info, Recorder, Input, Text, Header, ButtonIr } from '../../styles';
+import { Button, Conteiner, Info, Recorder, Input, Text, Header } from '../../styles';
 import SoundWave from '../../Components/SoundWave';
 import Loading from '../../Components/Loading';
 
 import useRecorder from '../../Hooks/UseRecorder/useRecorder';
-import { useNavigation } from '@react-navigation/native';
+import { useRecorderContext } from '../../Context/RecorderContext';
 import Message from '../../Components/Message';
+
+import { KeyboardAvoidingView } from 'react-native';
+
+import Api from '../../services/api';
 
 const Home = () => {
   const {
     startRecognizing,
     stopRecognizing,
-    error,
-    loading,
     recording,
     results,
     setResults,
     volume,
-    errorMessage,
-    setErrorMessage,
+    partialResults,
   } = useRecorder();
 
-  useEffect(() => {
-    if (results === '') {
-      setResults('.............................');
-    }
-  }, [results]);
+  const { loading, errorMessage } = useRecorderContext();
 
   const date = new Date();
 
+  const { sendQuestion } = Api();
+
+  useEffect(() => {
+    if (loading) {
+      sendQuestion(results);
+      setResults('........................');
+    }
+  }, [loading]);
+
   return (
     <Conteiner>
-      {errorMessage.status && <Message label={errorMessage.message} />}
+      {errorMessage?.status && <Message label={errorMessage.message} />}
       {loading ? (
         <Loading />
       ) : (
@@ -57,22 +62,27 @@ const Home = () => {
               </Button>
             )}
           </Recorder>
-          <Info>
-            <Text color="#999" weight="400">
-              Toque para falar
-            </Text>
-            <Input
-              multiline
-              numberOfLines={4}
-              value={results}
-              onChangeText={(text) => setResults(text)}
-              maxLength={500}
-              editable={results !== '.............................'}
-            />
-          </Info>
-          {/* <ButtonIr onPress={() => navigation.navigate('RecordPlayer')}>
-            <Icon name="close" color="#ffffff" size={10} />
-          </ButtonIr> */}
+          <KeyboardAvoidingView
+            behavior="height"
+            style={{
+              flex: 1,
+              width: 400,
+            }}
+          >
+            <Info>
+              <Text color="#999" weight="400">
+                Toque para falar
+              </Text>
+              <Input
+                multiline
+                numberOfLines={4}
+                value={results ? results : partialResults}
+                onChangeText={(text) => setResults(text)}
+                maxLength={500}
+                editable={results !== '.............................'}
+              />
+            </Info>
+          </KeyboardAvoidingView>
         </>
       )}
     </Conteiner>

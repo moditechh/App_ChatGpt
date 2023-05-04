@@ -1,16 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Conteiner } from './styles';
 
 import { ActivityIndicator } from 'react-native';
-import { Text } from '../../styles';
+import { TextLoad } from '../../styles';
 
 export default function Loading() {
+  const [loadMessage, setLoadMessage] = useState('Carregando Resposta');
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoadMessage('Sua resposta esta pronta em Breve...');
+    }, 5000);
+  }, []);
+
   return (
     <Conteiner>
       <ActivityIndicator size={70} color="#0055ff" />
-      <Text size={22} weight="500" color="#0055ff">
-        Carregando Dados
-      </Text>
+      <TextLoad size={22} weight="500" color="#0055ff">
+        {loadMessage}
+      </TextLoad>
     </Conteiner>
   );
 }
