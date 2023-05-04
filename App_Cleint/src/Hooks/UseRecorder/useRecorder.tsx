@@ -7,24 +7,28 @@ import Voice, {
   SpeechResultsEvent,
   SpeechErrorEvent,
 } from '@react-native-voice/voice';
+import { useNavigation } from '@react-navigation/native';
+
+import { useRecorderContext } from '../../Context/RecorderContext';
 
 export default function useRecorder() {
-  const [loading, setLoading] = useState(false);
   const [error, setErro] = useState('');
-  const [errorMessage, setErrorMessage] = useState({ message: '', status: false });
   const [recording, setRecording] = useState(false);
-  const [results, setResults] = useState('.............................');
+  const [results, setResults] = useState<string>('.............................');
   const [partialResults, setPartialResults] = useState('.............................');
   const [volume, setVolume] = useState(0);
+  const [audio, setAudio] = useState(null);
+
+  const { setLoading, setErrorMessage } = useRecorderContext();
 
   useEffect(() => {
     Voice.onSpeechStart = onSpeechStart;
     Voice.onSpeechRecognized = onSpeechRecognized;
-    Voice.onSpeechEnd = onSpeechEnd;
     Voice.onSpeechError = onSpeechError;
     Voice.onSpeechResults = onSpeechResults;
     Voice.onSpeechPartialResults = onSpeechPartialResults;
     Voice.onSpeechVolumeChanged = onSpeechVolumeChanged;
+    Voice.onSpeechEnd = onSpeechEnd;
 
     return () => {
       Voice.destroy().then(Voice.removeAllListeners);
@@ -39,16 +43,6 @@ export default function useRecorder() {
     console.log('onSpeechRecognized: ', e);
   };
 
-  const onSpeechEnd = (e: any) => {
-    console.log('onSpeechEnd: ', e);
-    setRecording(false);
-    setVolume(0);
-    setErrorMessage({ message: '', status: false });
-    setTimeout(() => {
-      setLoading(true);
-    }, 3000);
-  };
-
   const onSpeechError = (e: SpeechErrorEvent) => {
     console.log('onSpeechError: ', e);
     setErro(JSON.stringify(e.status?.message));
@@ -61,7 +55,17 @@ export default function useRecorder() {
 
   const onSpeechPartialResults = (e: SpeechResultsEvent) => {
     console.log('onSpeechPartialResults: ', e);
-    setResults(e.value[0]);
+    setPartialResults(e.value[0]);
+  };
+
+  const onSpeechEnd = (e: any) => {
+    console.log('onSpeechEnd: ', e);
+    setRecording(false);
+    setVolume(0);
+    setErrorMessage({ message: '', status: false });
+    setTimeout(() => {
+      setLoading(true);
+    }, 2000);
   };
 
   const onSpeechVolumeChanged = (e: any) => {
@@ -107,40 +111,16 @@ export default function useRecorder() {
       console.error(e);
     }
     setRecording(false);
-    setResults('.............................');
   };
   return {
     startRecognizing,
     stopRecognizing,
-    loading,
-    setLoading,
     recording,
     volume,
     results,
     setResults,
     error,
-    errorMessage,
-    setErrorMessage,
+    audio,
+    partialResults,
   };
 }
-
-// const _destroyRecognizer = async () => {
-//   try {
-//     await Voice.destroy();
-//   } catch (e) {
-//     console.error(e);
-//   }
-//   setResults('');
-//   setRecording(false);
-//   setResults('.............................');
-// };
-
-// const _cancelRecognizing = async () => {
-//   try {
-//     await Voice.cancel();
-//   } catch (e) {
-//     console.error(e);
-//   }
-//   setRecording(false);
-//   setResults('.............................');
-// };
