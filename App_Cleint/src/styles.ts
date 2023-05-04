@@ -28,9 +28,12 @@ export const PlayerButtons = styled.View`
 `;
 export const ResponseBox = styled.View`
   align-items: flex-start;
+<<<<<<< HEAD
   height: 100%;
   flex: 1;
   margin: 20px 0px;
+=======
+>>>>>>> d7f4bbf208d7a79e9b839821b36ee845c4a23189
 `;
 export const Header = styled.View`
   width: 100%;
@@ -67,6 +70,7 @@ export const Button = styled.TouchableOpacity<IButtonProps>`
   border-radius: 106px;
   background-color: ${({ bg }) => (bg ? '#26c1fa' : '#00aa00')};
 `;
+<<<<<<< HEAD
 export const ButtonA = styled.TouchableOpacity<IButtonProps>`
   width: 56px;
   height: 56px;
@@ -77,6 +81,9 @@ export const ButtonA = styled.TouchableOpacity<IButtonProps>`
   border-radius: 56px;
   background-color: ${({ bg }) => (bg ? '#26c1fa' : '#00aa00')};
 `;
+=======
+
+>>>>>>> d7f4bbf208d7a79e9b839821b36ee845c4a23189
 export const StopButton = styled.TouchableOpacity<IButtonProps>`
   width: 66px;
   height: 66px;
@@ -113,6 +120,7 @@ type ITextProps = {
 };
 
 export const Text = styled.Text<ITextProps>`
+<<<<<<< HEAD
   /* padding-top: 20px; */
   font-size: ${({ size }) => (size ? size : 20)}px;
   font-weight: ${({ weight }) => (weight ? weight : '300')};
@@ -122,6 +130,10 @@ export const TextLoad = styled.Text<ITextProps>`
   padding-top: 20px;
   text-align: center;
   font-size: ${({ size }) => (size ? size : 20)}px;
+=======
+  padding-top: 20px;
+  font-size: ${({ size }) => (size ? size : 18)}px;
+>>>>>>> d7f4bbf208d7a79e9b839821b36ee845c4a23189
   font-weight: ${({ weight }) => (weight ? weight : '300')};
   color: ${({ color }) => (color ? color : '#FFF')};
 `;

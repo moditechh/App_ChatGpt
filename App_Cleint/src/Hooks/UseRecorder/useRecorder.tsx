@@ -7,7 +7,6 @@ import Voice, {
   SpeechResultsEvent,
   SpeechErrorEvent,
 } from '@react-native-voice/voice';
-import { useNavigation } from '@react-navigation/native';
 
 import { useRecorderContext } from '../../Context/RecorderContext';
 

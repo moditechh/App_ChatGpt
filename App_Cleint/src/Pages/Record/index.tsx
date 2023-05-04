@@ -17,7 +17,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
 import Tts from 'react-native-tts';
-
 export default function RecordPlayer() {
   const { params } = useRoute();
 
@@ -35,6 +34,7 @@ export default function RecordPlayer() {
     await Tts.setDefaultLanguage('pt-br');
     await Tts.setDefaultVoice('com.apple.ttsbundle.Moira-compact');
     await Tts.setDefaultRate(0.5);
+
     await Tts.setDefaultPitch(1.0);
   };
 

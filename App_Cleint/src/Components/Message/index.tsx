@@ -24,7 +24,7 @@ export default function Message({ label }: IMessageProps) {
         duration: 3000,
         useNativeDriver: true,
       }).start();
-    }, 4000);
+    }, 5000);
   };
 
   useEffect(() => {
