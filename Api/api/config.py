@@ -1,2 +1,2 @@
 class Config:
-    OPENAI_API_KEY = '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'
+    OPENAI_API_KEY = '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'

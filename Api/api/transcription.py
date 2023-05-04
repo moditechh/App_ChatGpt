@@ -34,7 +34,7 @@ def audio(audio_name):
     return send_file(f'static/answers/{audio_name}', mimetype='audio/mp3')
 
 
-@transcription_bp.route('/transcribe', methods=['POST', 'GET'])
+@transcription_bp.route('/transcribe', methods=['POST'])
 def transcribe():
 
     # Caminho da pasta que você deseja limpar
@@ -61,12 +61,40 @@ def transcribe():
 
     # with open(audio_name,'rb') as file:
     #     transcription=openai.Audio.transcribe('whisper-1',file)
-    text = request.form.get('texto')
+
+    # Resposta de test 
+    
+    # text = request.form.get('texto')
+    # answer = interpret(text)
+
+    # tts = gTTS(text=answer, lang='pt-br')
+
+    # voice_file = f'_answer.mp3'
+    # tts.save(f'api/static/answers/{voice_file}')
+
+    # return render_template('answer_page.html', voice_file=voice_file, pergunta=text)
+
+    # Resposta em formato de audio 
+
+    # data = request.get_json()
+    # text = data['text']
+
+    # answer = interpret(text)
+    # tts = gTTS(text=answer, lang='pt-br')
+
+    # voice_file = f'_answer.mp3'
+    # tts.save(f'api/static/answers/{voice_file}')
+
+    # return send_file(f'static/answers/{voice_file}', mimetype='audio/mp3') 
+    # return ('essa é a resposta')
+
+    
+
+    data = request.get_json()
+    
+    text = data['text']
+
     answer = interpret(text)
+    
+    return answer
 
-    tts = gTTS(text=answer, lang='pt-br')
-
-    voice_file = f'_answer.mp3'
-    tts.save(f'api/static/answers/{voice_file}')
-
-    return render_template('answer_page.html', voice_file=voice_file, pergunta=text)
