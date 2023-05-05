@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-// import {} from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import { Button, Conteiner, Info, Recorder, Input, Text, Header } from '../../styles';
@@ -26,6 +25,7 @@ const Home = () => {
   useEffect(() => {
     if (loading) {
       sendQuestion(results);
+      setResults('.........................');
     }
   }, [loading]);
 
@@ -67,9 +67,6 @@ const Home = () => {
               editable={results !== '.............................'}
             />
           </Info>
-          {/* <ButtonIr onPress={() => navigation.navigate('RecordPlayer')}>
-            <Icon name="close" color="#ffffff" size={10} />
-          </ButtonIr> */}
         </>
       )}
     </Conteiner>

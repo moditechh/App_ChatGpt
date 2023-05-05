@@ -13,7 +13,7 @@ export default function Api() {
     console.log(message, 'Pergunta');
 
     try {
-      const res = await axios.post(
+      const { data } = await axios.post(
         'http://10.0.0.104:8000/api/transcribe',
         { text: message },
         {
@@ -23,7 +23,6 @@ export default function Api() {
         }
       );
 
-      const data = await res.data;
       console.log(data, 'RESPOSTA');
       setLoading(false);
       navigation.navigate('RecordPlayer', {
