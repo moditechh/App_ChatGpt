@@ -9,7 +9,7 @@ export default function Loading() {
 
   useEffect(() => {
     setTimeout(() => {
-      setLoadMessage('Sua resposta esta pronta em Breve...');
+      setLoadMessage('Sua resposta estará pronta em Breve...');
     }, 5000);
   }, []);
 

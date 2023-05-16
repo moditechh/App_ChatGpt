@@ -64,7 +64,7 @@ export default function useRecorder() {
     setErrorMessage({ message: '', status: false });
     setTimeout(() => {
       setLoading(true);
-    }, 2000);
+    }, 3000);
   };
 
   const onSpeechVolumeChanged = (e: any) => {

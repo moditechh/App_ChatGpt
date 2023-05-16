@@ -40,5 +40,45 @@ export default function Api() {
     }
   };
 
+  // const sendQuestion = async (text: string) => {
+  //   const apiKey = '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';
+  //   // const API_ENDPOINT = 'https://api.openai.com/v1/engines/text-davinci-002/completions';
+  //   const API_ENDPOINT = 'https://api.openai.com/v1/completions';
+
+  //   const headers = {
+  //     'Content-Type': 'application/json',
+  //     Authorization: `Bearer ${apiKey}`,
+  //   };
+
+  //   const data = {
+  //     model: 'text-davinci-003',
+  //     prompt: text + '?',
+  //     temperature: 0,
+  //     max_tokens: 3000,
+  //     top_p: 1,
+  //     frequency_penalty: 0,
+  //     presence_penalty: 0,
+  //     stop: '\n',
+  //   };
+
+  //   try {
+  //     const response = await axios.post(API_ENDPOINT, data, { headers: headers });
+  //     console.log(response.data.choices[0].text, 'RESPOSTA FOHAO');
+  //     setLoading(false);
+  //     navigation.navigate('RecordPlayer', {
+  //       dados: response.data.choices[0].text,
+  //       question: text,
+  //     });
+  //   } catch (error) {
+  //     console.error(error);
+  //     setErrorMessage({
+  //       message: 'erro ao acessar a Api do chatGPT, tente novamente...',
+  //       status: true,
+  //     });
+  //     navigation.navigate('Home');
+  //     setLoading(false);
+  //   }
+  // };
+
   return { sendQuestion };
 }

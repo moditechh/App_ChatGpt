@@ -27,11 +27,26 @@ export default function RecordPlayer() {
 
   const response = String(dados);
 
+  const lenguage = [
+    { language: 'en-US', idioma: 'Inglês' },
+    { language: 'es-ES', idioma: 'Espanhol' },
+    { language: 'fr-FR', idoma: 'Francês' },
+    { language: 'de-DE', idioma: 'Alemão' },
+    { language: 'it-IT', idioma: 'Italiano' },
+    { language: 'pt-BR', idioma: 'Português' },
+    { language: 'ru-RU', idioma: 'Russo' },
+    { language: 'ar-SA', idioma: 'Árabe' },
+    { language: 'zh-CN', idioma: 'Chinês simplificado' },
+    { language: 'zh-TW', idioma: 'Chinês tradicional' },
+    { language: 'ja-JP', idioma: 'Japonês' },
+    { language: 'ko-KR', idioma: 'Coreano' },
+  ];
+
   const initTts = async () => {
     if (!Tts.voices) {
       await Tts.getInitStatus();
     }
-    await Tts.setDefaultLanguage('pt-br');
+    await Tts.setDefaultLanguage('pt-BR');
     await Tts.setDefaultVoice('com.apple.ttsbundle.Moira-compact');
     await Tts.setDefaultRate(0.5);
 
