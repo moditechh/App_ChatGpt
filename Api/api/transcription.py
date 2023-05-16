@@ -15,16 +15,36 @@ def interpret(question):
     print(question)
 
 # Configuração Resposta do Chatgpt
-    response = openai.Completion.create(
-        engine="text-davinci-002",
-        prompt=prompt,
-        max_tokens=3000,
-        n=1,
-        stop=None,
-        temperature=0.7
+    # response = openai.Completion.create(
+    #     engine="gpt-3.5-turbo",
+    #     prompt=prompt,
+    #     max_tokens=3000,
+    #     n=1,
+    #     stop=None,
+    #     temperature=0
+    # )
+    
+    # response = openai.ChatCompletion.create(
+    #     engine="gpt-3.5-turbo",
+    #     prompt=prompt,
+    #     max_tokens=3000,
+    #     n=1,
+    #     stop=None,
+    #     temperature=0
+    # )
+
+    response = openai.ChatCompletion.create(
+    model="gpt-3.5-turbo",
+    messages=[
+        {"role": "system", "content": "You are a helpful assistant, and I want a detailed and long answer and like you are an expert on the subject of what I ask"},
+        {"role": "user", "content": prompt}
+    ],
+    temperature=0.9,
+    max_tokens=4000,
+    top_p=0.9
     )
 
-    answer = response.choices[0].text.strip()
+    answer = response.choices[0].message.content
 
     return answer
 
