@@ -15,35 +15,16 @@ def interpret(question):
     print(question)
 
 # Configuração Resposta do Chatgpt
-    # response = openai.Completion.create(
-    #     engine="gpt-3.5-turbo",
-    #     prompt=prompt,
-    #     max_tokens=3000,
-    #     n=1,
-    #     stop=None,
-    #     temperature=0
-    # )
-    
-    # response = openai.ChatCompletion.create(
-    #     engine="gpt-3.5-turbo",
-    #     prompt=prompt,
-    #     max_tokens=3000,
-    #     n=1,
-    #     stop=None,
-    #     temperature=0
-    # )
-
-    response = openai.ChatCompletion.create(
-    model="gpt-3.5-turbo",
-    messages=[
-        {"role": "user", "content": prompt}
-    ],
-    temperature=0.9,
-    max_tokens=4000,
-    top_p=0.9
+    response = openai.Completion.create(
+        engine="gpt-3.5-turbo",
+        prompt=prompt,
+        max_tokens=3000,
+        n=1,
+        stop=None,
+        temperature=0
     )
 
-    answer = response.choices[0].message.content
+    answer = response.choices[0].message.text
 
     return answer
 
