@@ -36,7 +36,6 @@ def interpret(question):
     response = openai.ChatCompletion.create(
     model="gpt-3.5-turbo",
     messages=[
-        {"role": "system", "content": "You are a helpful assistant, and I want a detailed and long answer and like you are an expert on the subject of what I ask"},
         {"role": "user", "content": prompt}
     ],
     temperature=0.9,
